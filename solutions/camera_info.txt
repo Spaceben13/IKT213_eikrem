@@ -1,0 +1,3 @@
+FPS: 30.0
+Width: 640
+Height: 480
