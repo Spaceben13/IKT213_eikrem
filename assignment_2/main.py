@@ -46,24 +46,13 @@ def hsv(image):
     cv2.destroyAllWindows()
 
 
-def hue_shifted(image, emptyPictureArray, hue):
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-    h, s, v = cv2.split(hsv)
-
-    h = (h.astype(int) + hue) % 180
-    h = h.astype(np.uint8)
-
-    shifted_hsv = cv2.merge([h, s, v])
-
-    shifted_bgr = cv2.cvtColor(shifted_hsv, cv2.COLOR_HSV2BGR)
-
-    emptyPictureArray[:] = shifted_bgr[:]
-
-    cv2.imshow("Hue Shifted", emptyPictureArray)
-
+def hue_shifted(image, emptyPictureArray, value):
+    shifted = np.clip(image.astype(np.int16) + value, 0, 255).astype(np.uint8)
+    emptyPictureArray[:] = shifted
+    cv2.imshow(f"Color shifted +{value}", emptyPictureArray)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
 
 
 def smoothing(image):
@@ -99,23 +88,23 @@ def main():
     height, width, channel = image.shape
     emptyPictureArray = np.zeros((height, width, 3), dtype=np.uint8)
 
-    padding(img_rgb, border_width)
+    #padding(img_rgb, border_width)
 
-    crop(image, 80, 382, 80, 382)
+    #crop(image, 80, 382, 80, 382)
 
-    resize(image, 200, 200)
+    #resize(image, 200, 200)
 
-    copy(image, emptyPictureArray)
+    #copy(image, emptyPictureArray)
 
-    grayscale(image)
+    #grayscale(image)
 
-    hsv(image)
+    #hsv(image)
 
     hue_shifted(image, emptyPictureArray, 50)
 
-    smoothing(image)
+    #smoothing(image)
 
-    rotation(image, 90)
+    #rotation(image, 90)
 
 
 if __name__ == "__main__":
